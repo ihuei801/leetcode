@@ -1,0 +1,12 @@
+---- compare Matches (11 in 3 files) ----
+Evaluate Reverse Polish Notation.cpp:        if (comp_type.compare("+") == 0)
+Evaluate Reverse Polish Notation.cpp:        else if (comp_type.compare("-") == 0)
+Evaluate Reverse Polish Notation.cpp:        else if (comp_type.compare("*") == 0)
+Evaluate Reverse Polish Notation.cpp:        else if (comp_type.compare("/") == 0)
+Evaluate Reverse Polish Notation.cpp:            if ((tokens[i].compare("+") == 0)
+Evaluate Reverse Polish Notation.cpp:                || (tokens[i].compare("-") == 0)
+Evaluate Reverse Polish Notation.cpp:                || (tokens[i].compare("*") == 0)
+Evaluate Reverse Polish Notation.cpp:                || (tokens[i].compare("/") == 0))
+Merge k Sorted Lists.cpp://compare the min node for every list in one iteration
+Two Sum.cpp:    static bool compare(const Node &left, const Node &right)
+Two Sum.cpp:        sort(elements.begin(), elements.end(), compare);

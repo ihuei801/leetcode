@@ -1,0 +1,13 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "."
+		},
+		{
+			"follow_symlinks": true,
+			"path": "/Users/Sean/Sean/Interview/Apple/20141212/scale_image/bmp_lib/bmplib"
+		}
+	]
+}
