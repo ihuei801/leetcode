@@ -14,15 +14,22 @@ class Solution(object):
         """
         need = collections.Counter(t)
         missing = len(t)
-        i = I = J = 0
-        for j, c in enumerate(s, 1):
-            missing -= need[c] > 0
-            need[c] -= 1
-            if not missing:
-                while i < j and need[s[i]] < 0:
-                    need[s[i]] += 1
-                    i += 1
-                if not J or j - i < J - I:
-                    I, J = i, j
-        return s[I:J]
+        i = j = I = 0
+        min_len = float('inf')
+        while j < len(s):
+            need[s[j]] -= 1
+            if need[s[j]] >= 0:
+                missing -= 1
+            while not missing:
+                if j - i + 1 < min_len:
+                    min_len = j - i + 1
+                    I = i
+                need[s[i]] += 1
+                if need[s[i]] > 0:
+                    missing += 1
+                i += 1
+            j += 1
+                
+        return s[I:I+min_len] if min_len != float('inf') else ""
+                    
                     

@@ -18,11 +18,16 @@ class Solution(object):
         """
         if not intervals:
             return []
-        stack = []
         intervals.sort(key=lambda x: x.start)
-        for interval in intervals:
-            if stack and interval.start <= stack[-1].end:
-                stack[-1].end = max(stack[-1].end, interval.end)
+        stack = []
+        last = intervals[0]
+        for i in xrange(1, len(intervals)):
+            if intervals[i].start > last.end:
+                stack.append(last)
+                last = intervals[i]
             else:
-                stack.append(interval)
+                last.start = min(last.start, intervals[i].start)
+                last.end = max(last.end, intervals[i].end)
+        stack.append(last)
+                
         return stack
