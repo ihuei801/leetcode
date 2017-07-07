@@ -12,24 +12,23 @@ class Solution(object):
         :type t: str
         :rtype: str
         """
-        need = collections.Counter(t)
+        d = collections.Counter(t)
         missing = len(t)
-        i = j = I = 0
+        l = r = L = 0
         min_len = float('inf')
-        while j < len(s):
-            need[s[j]] -= 1
-            if need[s[j]] >= 0:
+        while r < len(s):
+            d[s[r]] -= 1
+            if d[s[r]] >= 0:
                 missing -= 1
             while not missing:
-                if j - i + 1 < min_len:
-                    min_len = j - i + 1
-                    I = i
-                need[s[i]] += 1
-                if need[s[i]] > 0:
+                if r - l + 1 < min_len:
+                    min_len = r - l + 1
+                    L = l
+                d[s[l]] += 1
+                if d[s[l]] > 0:
                     missing += 1
-                i += 1
-            j += 1
-                
-        return s[I:I+min_len] if min_len != float('inf') else ""
+                l += 1
+            r += 1
+        return "" if min_len == float('inf') else s[L:L+min_len]
                     
                     
