@@ -3,7 +3,6 @@
 # Time Complexity: O(n)
 # Space Complexity: O(1)
 ###
-
 class Solution(object):
     def moveZeroes(self, nums):
         """
@@ -12,9 +11,11 @@ class Solution(object):
         """
         if not nums:
             return
-        idx = 0
+        l = 0
         for i in xrange(len(nums)):
-            if nums[i]:
-                nums[idx], nums[i] = nums[i], nums[idx]
-                idx += 1
-                
+            if nums[i] != 0:
+                nums[l], nums[i] = nums[i], nums[l]
+                l += 1
+          
+            
+ 

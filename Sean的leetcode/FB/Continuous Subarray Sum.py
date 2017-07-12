@@ -9,15 +9,18 @@ class Solution(object):
         :type k: int
         :rtype: bool
         """
-        d = dict({0:-1})
+        if not nums:
+            return False
+        d = {0: -1}
         accu = 0
-        for idx, num in enumerate(nums):
+        for i, num in enumerate(nums):
             accu += num
-            if k != 0:
+            if k:
                 accu %= k
             if accu in d:
-                if idx - d[accu] >= 2:
+                if i - d[accu] >= 2: 
                     return True
             else:
-                d[accu] = idx
+                d[accu] = i
         return False
+                

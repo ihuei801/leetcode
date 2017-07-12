@@ -12,15 +12,16 @@ class Solution(object):
         """
         if not nums:
             return 0
-        l , r = 0, 0
-        tmp = 0
+        curr = 0
         min_len = float('inf')
+        l = r = 0
         while r < len(nums):
-            tmp += nums[r]
-            while tmp >= s:
-                min_len = min(min_len, r - l + 1)
-                tmp -= nums[l]
+            curr += nums[r]
+            while curr >= s:
+                if r - l + 1 < min_len:
+                    min_len = r - l + 1
+                curr -= nums[l]
                 l += 1
             r += 1
-        return min_len if min_len != float('inf') else 0
+        return 0 if min_len == float('inf') else min_len
             

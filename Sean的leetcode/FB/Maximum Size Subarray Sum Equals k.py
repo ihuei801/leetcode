@@ -9,14 +9,17 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        d = {0:-1}
+        if not nums:
+            return 0
+        d = {0 : -1}
         accu = 0
-        maxlen = 0
-        for i in xrange(len(nums)):
-            accu += nums[i]
-            if accu not in d:
-                d[accu] = i
+        max_len = 0
+        for i, num in enumerate(nums):
+            accu += num
             if accu - k in d:
-                maxlen = max(maxlen, i - d[accu - k])
-        return maxlen
+                max_len = max(max_len, i - d[accu - k])
+            if accu not in d:       
+                d[accu] = i
+        return max_len
         
+            
