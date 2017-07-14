@@ -9,7 +9,6 @@
 #         self.val = x
 #         self.left = None
 #         self.right = None
-
 class Solution(object):
     def levelOrder(self, root):
         """
@@ -18,13 +17,13 @@ class Solution(object):
         """
         if not root:
             return []
-        q = [root]
+        q = collections.deque([root])
         re = []
         while q:
             n = len(q)
             level = []
             for i in xrange(n):
-                e = q.pop(0)
+                e = q.popleft()
                 level.append(e.val)
                 if e.left:
                     q.append(e.left)

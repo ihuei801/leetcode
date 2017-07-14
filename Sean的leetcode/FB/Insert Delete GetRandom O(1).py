@@ -4,9 +4,8 @@ class RandomizedSet(object):
         """
         Initialize your data structure here.
         """
-        self.table = {}
-        self.lst = []
-        
+        self.d = {}
+        self.l = []
 
     def insert(self, val):
         """
@@ -14,11 +13,12 @@ class RandomizedSet(object):
         :type val: int
         :rtype: bool
         """
-        if val not in self.table:
-            self.lst.append(val)
-            self.table[val] = len(self.lst) - 1
-            return True
-        return False
+        if val in self.d:
+            return False
+        
+        self.l.append(val)
+        self.d[val] = len(self.l) - 1
+        return True
         
 
     def remove(self, val):
@@ -27,23 +27,22 @@ class RandomizedSet(object):
         :type val: int
         :rtype: bool
         """
-        if val in self.table:
-            idx = self.table[val]
-            last = self.lst[-1]
-            self.table[last] = idx
-            self.lst[idx] = last
-            self.table.pop(val)
-            self.lst.pop()
-            return True
-        return False
-        
+        if val not in self.d:
+            return False
+        rm_idx = self.d[val]
+        self.d[self.l[-1]] = rm_idx
+        self.l[rm_idx] = self.l[-1]
+        self.d.pop(val)
+        self.l.pop()
+        return True
 
     def getRandom(self):
         """
         Get a random element from the set.
         :rtype: int
         """
-        return self.lst[random.randint(0, len(self.lst) - 1)]
+        from random import randint
+        return self.l[randint(0, len(self.l)-1)]
         
 
 

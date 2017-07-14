@@ -1,26 +1,28 @@
 ###
-# Time Complexity: O(n)
-# Space Complexity: O(1)
+# Time Complexity: O(m*n)
+# Space Complexity: O(m*n) recursive call
 ###
-# The knows API is already defined for you.
-# @param a, person a
-# @param b, person b
-# @return a boolean, whether a knows b
-# def knows(a, b):
-
 class Solution(object):
-    def findCelebrity(self, n):
+    def numIslands(self, grid):
         """
-        :type n: int
+        :type grid: List[List[str]]
         :rtype: int
         """
-        if n == 0:
-            return -1
-        c = 0
-        for p in xrange(1, n):
-            if knows(c, p):
-                c = p
-        for p in xrange(n):
-            if p != c and (knows(c, p) or not knows(p, c)):
-                return -1
-        return c
+        if not grid or not grid[0]:
+            return 0
+        num = 0
+        for i in xrange(len(grid)):
+            for j in xrange(len(grid[0])):
+                if grid[i][j] == '1':
+                    num += 1
+                    self.dfs(grid, i, j)
+        return num
+    def dfs(self, grid, i, j):
+        if i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] != '1':
+            return
+        grid[i][j] = '#'
+        direc = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        for dr, dc in direc:
+            self.dfs(grid, i + dr, j + dc)
+        
+            

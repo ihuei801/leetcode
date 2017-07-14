@@ -11,12 +11,11 @@ class Solution(object):
         """
         if not nums:
             return [[]]
-        re = []
+        re = [[]]
         self.dfs(nums, 0, [], re)
         return re
     def dfs(self, nums, idx, one_sol, re):
-        re.append(one_sol)
         for i in xrange(idx, len(nums)):
+            re.append(one_sol + [nums[i]])
             self.dfs(nums, i+1, one_sol + [nums[i]], re)
-        
         

@@ -10,10 +10,12 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        d = dict()
-        for i in xrange(len(nums)):
-            if (target - nums[i]) in d:
-                return [d[target-nums[i]], i]
-            d[nums[i]] = i
+        if len(nums) < 2:
+            return []
+        d = {}
+        for i, num in enumerate(nums):
+            if target - num in d:
+                return [d[target-num], i]
+            d[num] = i
         return []
                 

@@ -26,6 +26,7 @@ class Solution(object):
     def dfs(self, root, one_sol, res):
         if not root.left and not root.right:
             res.append(one_sol + str(root.val))
+            return
         if root.left:
             self.dfs(root.left, one_sol + str(root.val) + "->", res)
         if root.right:

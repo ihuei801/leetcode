@@ -4,6 +4,12 @@
 # Space Complexity: O(n)
 ###
 
+###
+# BFS
+# Time Complexity: O(n*26L) n:number of words L:len of word
+# Space Complexity: O(n)
+###
+
 class Solution(object):
     def ladderLength(self, beginWord, endWord, wordList):
         """
@@ -22,10 +28,11 @@ class Solution(object):
             wordList.remove(beginWord)
         if endWord in wordList:
             wordList.remove(endWord)
-        q = [beginWord]
+        q = collections.deque([beginWord])
         while q:
-            next_q = []
-            for word in q:
+            n = len(q)
+            for i in xrange(n):
+                word = q.popleft()
                 for i in xrange(len(word)):
                     pre = word[:i]
                     suf = word[i+1:]
@@ -35,9 +42,8 @@ class Solution(object):
                             if tmp == endWord:
                                 return ladder + 1
                             if tmp in wordList:
-                                next_q.append(tmp)
+                                q.append(tmp)
                                 wordList.remove(tmp)
-            q = next_q
             ladder += 1
     
         return 0
