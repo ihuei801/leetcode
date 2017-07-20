@@ -14,8 +14,10 @@ class Solution(object):
         re = [[]]
         self.dfs(nums, 0, [], re)
         return re
-    def dfs(self, nums, idx, one_sol, re):
+    
+    def dfs(self, nums, idx, cur, re):
         for i in xrange(idx, len(nums)):
-            re.append(one_sol + [nums[i]])
-            self.dfs(nums, i+1, one_sol + [nums[i]], re)
+            re.append(cur + [nums[i]])
+            self.dfs(nums, i + 1, cur + [nums[i]], re)
+            
         

@@ -20,8 +20,8 @@ class Solution(object):
         """
         if not root:
             return []
-        res = []
-        self.dfs(root, "", res)
+        re = []
+        self.dfs(root, "", re)
         return res
     def dfs(self, root, one_sol, res):
         if not root.left and not root.right:

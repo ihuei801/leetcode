@@ -5,7 +5,6 @@
 # Time Complexity: O(n) 
 # Space Complexity: O(n)
 ###
-
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
@@ -14,19 +13,20 @@
 #         self.right = None
 
 class Solution(object):
-    
     def diameterOfBinaryTree(self, root):
         """
         :type root: TreeNode
         :rtype: int
         """
-        self.max_path = 0
-        self.maxDepth(root)
-        return self.max_path
-    def maxDepth(self, root):
         if not root:
             return 0
-        left = self.maxDepth(root.left)
-        right = self.maxDepth(root.right)
-        self.max_path = max(self.max_path, left + right)
+        self.diamtr = 0
+        self.dfs(root)
+        return self.diamtr
+    def dfs(self, root):
+        if not root:
+            return 0
+        left = self.dfs(root.left)
+        right = self.dfs(root.right)
+        self.diamtr = max(self.diamtr, left + right)
         return max(left, right) + 1

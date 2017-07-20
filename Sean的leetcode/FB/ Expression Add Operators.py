@@ -13,27 +13,28 @@ class Solution(object):
         :type target: int
         :rtype: List[str]
         """
-        self.target = target
-        res = []
-        self.dfs(num, 0, "", 0, 0, res);
-        return res
-    def dfs(self, num, cur, one_sol, cur_sum, cur_mult, res):
-        if cur == len(num):
-            if cur_sum == self.target:
-                res.append(one_sol)
-                return
-        for i in xrange(cur, len(num)):
-            if i != cur and num[cur] == '0':
+        if not num:
+            return []
+        re = []
+        self.dfs(num, 0, 0, 0, target, "", re)
+        return re
+    def dfs(self, num, idx, cur_sum, cur_mult, target, one_sol, re):
+        if idx == len(num):
+            if cur_sum == target:
+                re.append(one_sol)
+            return
+        for i in xrange(idx, len(num)):
+            if i != idx and num[idx] == '0':
                 break
-            tmp = num[cur:i+1]
-            val = int(tmp)
-            if cur == 0:
-                self.dfs(num, i + 1, one_sol + tmp, val, val, res)
+            val_str = num[idx:i+1]
+            val = int(val_str)
+            if idx == 0:
+                self.dfs(num, i + 1, val, val, target, one_sol + val_str, re)
             else:
-                self.dfs(num, i + 1, one_sol + "+" + tmp, cur_sum + val, val, res)
-                self.dfs(num, i + 1, one_sol + "-" + tmp, cur_sum - val, -val, res)
-                self.dfs(num, i + 1, one_sol + "*" + tmp, cur_sum - cur_mult + cur_mult * val, cur_mult * val, res)
-                
-                
+                self.dfs(num, i + 1, cur_sum + val, val, target, one_sol + "+" + val_str, re)
+                self.dfs(num, i + 1, cur_sum - val, -val, target, one_sol + "-" + val_str, re)
+                self.dfs(num, i + 1, cur_sum - cur_mult + cur_mult * val, cur_mult * val, target, one_sol + "*" + val_str, re)
+        
+
                 
         

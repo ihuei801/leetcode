@@ -9,6 +9,7 @@
 #         self.val = x
 #         self.left = None
 #         self.right = None
+
 class Solution(object):
     def isSubtree(self, s, t):
         """
@@ -16,18 +17,23 @@ class Solution(object):
         :type t: TreeNode
         :rtype: bool
         """
-        s_serial = ',' + self.serialize(s)
-        t_serial = ',' + self.serialize(t)
-        return t_serial in s_serial 
-    def serialize(self, s):
-        re = []
-        self.serial(s, re)
-        return ','.join(re)
-    def serial(self, s, re):
+        if not t:
+            return True
         if not s:
+            return False
+        s_str = ',' + self.serial(s)
+        t_str = ',' + self.serial(t)
+        return t_str in s_str
+    def serial(self, n):
+        re = []
+        self.dfs(n, re)
+        return ','.join(re)
+    def dfs(self, n, re):
+        if not n:
             re.append('#')
             return
-        re.append(str(s.val))
-        self.serial(s.left, re)
-        self.serial(s.right, re)
+        re.append(str(n.val))
+        self.dfs(n.left, re)
+        self.dfs(n.right, re)
+    
     
