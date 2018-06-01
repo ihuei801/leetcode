@@ -12,6 +12,9 @@ class Solution(object):
         if len(envelopes) <= 1:
             return len(envelopes)
         envelopes.sort(key = lambda x: (x[0], -x[1]))
+        return self.lis(envelopes)
+    
+    def lis(self, envelopes): #longest increasing sequence
         dp = []
         for i, e in enumerate(envelopes):
             it = bisect.bisect_left(dp, e[1])

@@ -9,17 +9,27 @@ class Solution(object):
         :type strings: List[str]
         :rtype: List[List[str]]
         """
-        from collections import defaultdict
-        if not strings:
-            return []
-        d = defaultdict(list)
+        d = collections.defaultdict(list)
+        for s in strings:
+            key = []
+            for c in s:
+                key.append((ord(c) - ord(s[0])) % 26)
+            d[tuple(key)].append(s)
+        return d.values()
+            
+            
+cclass Solution(object):
+    def groupStrings(self, strings):
+        """
+        :type strings: List[str]
+        :rtype: List[List[str]]
+        """
+        d = collections.defaultdict(list)
         for s in strings:
             key = ""
             for c in s:
-                diff = ord(c) - ord(s[0])
-                if diff < 0:
-                    diff += 26
-                key += chr(ord('a') + diff)
+                key += chr(ord("a") + (ord(c) - ord(s[0])) % 26)
             d[key].append(s)
         return d.values()
+            
         

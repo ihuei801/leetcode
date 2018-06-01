@@ -14,20 +14,17 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        if n < 1:
-            return -1
-        l = 1
-        r = n
+        if n <= 1:
+            return n
+        l, r = 1, n
         while l + 1 < r:
             mid = (l + r) / 2
-            ans = guess(mid)
-            if ans == 0:
+            g = guess(mid)
+            if g == 0:
                 return mid
-            elif ans == -1:
+            elif g < 0:
                 r = mid
             else:
                 l = mid
-        if guess(l) == 0:
-            return l
-        else:
-            return r
+        return l if guess(l) == 0 else r
+        

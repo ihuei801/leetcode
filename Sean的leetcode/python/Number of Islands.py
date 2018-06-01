@@ -11,21 +11,19 @@ class Solution(object):
         if not grid or not grid[0]:
             return 0
         num = 0
-        for i in xrange(len(grid)):
-            for j in xrange(len(grid[0])):
-                if grid[i][j] == '1':
+        for i, row in enumerate(grid):
+            for j, e in enumerate(row):
+                if e == "1":
                     num += 1
-                    self.dfs(grid, i, j)
+                    self.dfs(grid, i, j) #mark visit
         return num
+    
     def dfs(self, grid, i, j):
-        rows = len(grid)
-        cols = len(grid[0])
-        grid[i][j] = '0'
-        direc = [(-1, 0), (1, 0), (0, 1), (0, -1)]
-        for di, dj in direc:
-            nbi = i + di
-            nbj = j + dj
-            if nbi >= 0 and nbi < rows and nbj >= 0 and nbj < cols and grid[nbi][nbj] == '1':
+        m = len(grid)
+        n = len(grid[0])
+        grid[i][j] = "#"
+        for nbi, nbj in ((i+1, j), (i-1, j), (i, j+1), (i, j-1)):
+            if nbi >= 0 and nbi < m and nbj >= 0 and nbj < n and grid[nbi][nbj] == '1':
                 self.dfs(grid, nbi, nbj)
         
         

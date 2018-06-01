@@ -21,7 +21,36 @@
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
 
+class Solution(object):
+    def mergeKLists(self, lists):
+        """
+        :type lists: List[ListNode]
+        :rtype: ListNode
+        """
+        import heapq
+        if not lists:
+            return None
+        pq = []
+        for lst in lists:
+            if lst:
+                heapq.heappush(pq, (lst.val, lst))
+        
+        dummy = cur = ListNode(None)
+        while pq:
+            v, nd = heapq.heappop(pq)
+            cur.next = nd
+            cur = cur.next
+            if nd.next:
+                heapq.heappush(pq, (nd.next.val, nd.next))
+        return dummy.next
+            
+        
 class Solution(object):
     def mergeKLists(self, lists):
         """

@@ -10,22 +10,24 @@ class Solution(object):
         :type abbr: str
         :rtype: bool
         """
+        m = len(word)
+        n = len(abbr)
         i = 0
         j = 0
-        while i < len(word) and j < len(abbr):
+        while i < m and j < n:
             if abbr[j].isdigit():
                 if abbr[j] == '0':
                     return False
-                k = j
-                while j < len(abbr) and abbr[j].isdigit():
+                s = j
+                while j < n and abbr[j].isdigit():
                     j += 1
-                num = int(abbr[k:j])
-                i += num
+                i += int(abbr[s:j])
             else:
                 if word[i] != abbr[j]:
                     return False
                 i += 1
                 j += 1
-        return i == len(word) and j == len(abbr)
+        return i == m and j == n
+        
         
         

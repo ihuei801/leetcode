@@ -3,7 +3,6 @@
 # Time Complexity: O(n)
 # Space Complexity: O(h) = O(n)
 ###
-
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
@@ -21,8 +20,8 @@ class Codec:
         """
         re = []
         self.serial(root, re)
-        return ','.join(re)
-        
+        return ",".join(re)
+    
     def serial(self, root, re):
         if not root:
             re.append("#")
@@ -30,7 +29,7 @@ class Codec:
         re.append(str(root.val))
         self.serial(root.left, re)
         self.serial(root.right, re)
-        
+
     def deserialize(self, data):
         """Decodes your encoded data to tree.
         
@@ -39,15 +38,18 @@ class Codec:
         """
         return self.deserial(iter(data.split(',')))
     
-    def deserial(self, vals):
-        val = next(vals)
+    def deserial(self, it):
+        val = next(it)
         if val == "#":
             return None
         node = TreeNode(int(val))
-        node.left = self.deserial(vals)
-        node.right = self.deserial(vals)
+        node.left = self.deserial(it)
+        node.right = self.deserial(it)
         return node
-        
+
+# Your Codec object will be instantiated and called as such:
+# codec = Codec()
+# codec.deserialize(codec.serialize(root))
 
 # Your Codec object will be instantiated and called as such:
 # codec = Codec()

@@ -11,35 +11,73 @@ class Solution(object):
         :type queries: List[List[str]]
         :rtype: List[float]
         """
-        from collections import defaultdict
-        d = defaultdict(dict)
+        edges = collections.defaultdict(dict)
         for (nu, de), v in zip(equations, values):
-            d[nu][de] = v
-            d[de][nu] = 1.0 / v
+            edges[nu][de] = v
+            edges[de][nu] = 1 / v
         re = []
         for nu, de in queries:
-            ans = self.dfs(nu, de, d, set())
-            if not ans:
-                re.append(-1.0)
+            ans = self.dfs(edges, nu, de, set())
+            if ans:
+                re.append(ans)
             else:
-                re.append(ans)    
+                re.append(-1.0)
         return re
     
-    def dfs(self, nu, de, d, visit):
-        if nu in visit:
-            return None
-        if nu not in d or de not in d:
+    def dfs(self, edges, nu, de, visit):
+        if nu not in edges or de not in edges:
             return None
         if nu == de:
             return 1.0
-        if de in d[nu]:
-            return d[nu][de]
+        if de in edges[nu]:
+            return edges[nu][de]
         visit.add(nu)
-        for e in d[nu].keys():
-            res = self.dfs(e, de, d, visit)
-            if res:
-                return res * d[nu][e]
+        for nxt, v in edges[nu].iteritems():
+            if nxt not in visit:
+                ans = self.dfs(edges, nxt, de, visit)
+                if ans:
+                    return v * ans
         visit.remove(nu)
         return None
+                
+                
+class Solution(object):
+    def calcEquation(self, equations, values, queries):
+        """
+        :type equations: List[List[str]]
+        :type values: List[float]
+        :type queries: List[List[str]]
+        :rtype: List[float]
+        """
+        edges = collections.defaultdict(dict)
+        for (nu, de), v in zip(equations, values):
+            edges[nu][de] = v
+            edges[de][nu] = 1 / v
+        re = []
+        for nu, de in queries:
+            ans = self.dfs(edges, nu, de, set())
+            if ans:
+                re.append(ans)
+            else:
+                re.append(-1.0)
+        return re
+    
+    def dfs(self, edges, nu, de, visit):
+        if nu not in edges or de not in edges:
+            return None
+        if nu in visit:
+            return None
+        if nu == de:
+            return 1.0
+        if de in edges[nu]:
+            return edges[nu][de]
+        visit.add(nu)
+        for nxt, v in edges[nu].iteritems():
+            ans = self.dfs(edges, nxt, de, visit)
+            if ans:
+                return v * ans
+        visit.remove(nu)
+        return None
+                
         
         

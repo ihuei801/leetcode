@@ -11,26 +11,26 @@
 #         self.right = None
 
 class Solution(object):
-    
-    def inorder(self, node):
-        if not node:
-            return 
-        self.inorder(node.left)
-        if self.prev:
-            self.min_dis = min(self.min_dis, node.val - self.prev.val)
-        self.prev = node
-        self.inorder(node.right)
-        
     def minDiffInBST(self, root):
         """
         :type root: TreeNode
         :rtype: int
         """
         if not root:
-            return -1
-        self.prev = None
-        self.min_dis = float('inf')
-        self.inorder(root)        
-        return self.min_dis
+            return 0
+        self.pre = None #need to be global because you can't pass a prev to parent
+        self.re = float('inf')
+        self.dfs(root)
+        return self.re
+    
+    def dfs(self, node):
+        if not node:
+            return
+        self.dfs(node.left)
+        if self.pre:
+            self.re = min(self.re, root.val - self.pre.val)
+        self.pre = node
+        self.dfs(node.right)
+
         
         

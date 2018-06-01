@@ -8,6 +8,7 @@
 #     def __init__(self, s=0, e=0):
 #         self.start = s
 #         self.end = e
+
 class Solution(object):
     def insert(self, intervals, newInterval):
         """
@@ -15,21 +16,22 @@ class Solution(object):
         :type newInterval: Interval
         :rtype: List[Interval]
         """
-        if not intervals:
-            return [newInterval]
         re = []
-        idx = 0
-        while idx < len(intervals) and intervals[idx].end < newInterval.start:
-            re.append(intervals[idx])
-            idx += 1
-        while idx < len(intervals) and intervals[idx].start <= newInterval.end:
-            newInterval.start = min(newInterval.start, intervals[idx].start)
-            newInterval.end = max(newInterval.end, intervals[idx].end)
-            idx += 1
+        add = False
+        i = 0
+        while i < len(intervals) and intervals[i].end < newInterval.start:
+            re.append(intervals[i])
+            i += 1
         re.append(newInterval)
-        while idx < len(intervals):
-            re.append(intervals[idx])
-            idx += 1
+        
+        while i < len(intervals):
+            print i
+            if intervals[i].start > re[-1].end:
+                re.append(intervals[i])
+            else:
+                re[-1].start = min(re[-1].start, intervals[i].start)
+                re[-1].end = max(re[-1].end, intervals[i].end)
+            i += 1
         return re
 # Method 2
 # Use merge

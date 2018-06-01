@@ -1,6 +1,7 @@
 ###
 # Tree Search
 # Time Complexity: O(h)
+# Space Complexity: O(1)
 ###
 # Definition for a binary tree node.
 # class TreeNode(object):

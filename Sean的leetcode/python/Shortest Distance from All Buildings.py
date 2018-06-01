@@ -11,41 +11,40 @@ class Solution(object):
         """
         if not grid or not grid[0]:
             return 0
-        rows = len(grid)
-        cols = len(grid[0])
-        dis = [[0] * cols for _ in xrange(rows)]
-        visit = [[0] * cols for _ in xrange(rows)]
-        total_num = 0
+        m = len(grid)
+        n = len(grid[0])
+        dist = [[0] * n for i in xrange(m)]
+        cnt = [[0] * n for i in xrange(m)]
+        total = 0
         for i, row in enumerate(grid):
             for j, e in enumerate(row):
                 if e == 1:
-                    self.bfs(grid, i, j, dis, visit)
-                    total_num += 1
-        min_dis = float('inf')
-        for i, row in enumerate(visit):
+                    self.bfs(grid, i, j, dist, cnt)
+                    total += 1
+        mindis = float('inf')
+        for i, row in enumerate(dist):
             for j, e in enumerate(row):
-                if e == total_num:
-                    min_dis = min(min_dis, dis[i][j])
-        return min_dis if min_dis != float('inf') else -1
+                if cnt[i][j] == total:
+                    mindis = min(mindis, e)
+                    
+        return mindis if mindis != float('inf') else -1
     
-    def bfs(self, grid, r, c, dis, visit):
-        rows = len(grid)
-        cols = len(grid[0])
-        d = [(1,0), (-1,0), (0,1), (0,-1)]
-        level = 1
-        q = [(r,c)]
-        visited = set((r,c))
+    def bfs(self, grid, i, j, dist, cnt):
+        m = len(grid)
+        n = len(grid[0])
+        q = collections.deque([(i, j)])
+        dis = 1
+        visit = [[False] * n for i in xrange(m)]
         while q:
-            next_q = []
-            for i, j in q:
-                for d_i, d_j in d:
-                    nb_i = i + d_i
-                    nb_j = j + d_j
-                    if nb_i >= 0 and nb_i < rows and nb_j >= 0 and nb_j < cols and grid[nb_i][nb_j] == 0 and (nb_i, nb_j) not in visited:
-                        dis[nb_i][nb_j] += level
-                        visit[nb_i][nb_j] += 1
-                        next_q.append((nb_i, nb_j))
-                        visited.add((nb_i, nb_j))
-            q = next_q
-            level += 1
+            size = len(q)
+            for _ in xrange(size):
+                i, j = q.popleft()
+                for nbi, nbj in ((i+1, j), (i-1, j), (i, j-1), (i, j+1)):
+                    if nbi >= 0 and nbi < m and nbj >= 0 and nbj < n and grid[nbi][nbj] == 0 and not visit[nbi][nbj]:
+                        visit[nbi][nbj] = True
+                        dist[nbi][nbj] += dis
+                        cnt[nbi][nbj] += 1
+                        q.append((nbi, nbj))
+            dis += 1
+    
         

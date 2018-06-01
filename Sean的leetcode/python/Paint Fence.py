@@ -13,20 +13,20 @@
 # Diff[2] = k * (k-1)
 # Answer: Same[n] + Diff[n]
 ###
-class Solution(object):
+cclass Solution(object):
     def numWays(self, n, k):
         """
         :type n: int
         :type k: int
         :rtype: int
         """
-        if n == 0: return 0
-        if n == 1: return k
-        
-        same = k
+        if n == 0:
+            return 0
+        if n == 1:
+            return k
         diff = k * (k-1)
-        for i in xrange(3, n+1):
-            tmp = diff 
-            diff = (same + diff) * (k-1)
-            same = tmp
+        same = k
+        for i in xrange(3, n+1):     
+            same, diff = diff, (same + diff) * (k-1)     
         return same + diff
+        

@@ -16,22 +16,25 @@ class Solution(object):
         :type tickets: List[List[str]]
         :rtype: List[str]
         """
-        from collections import defaultdict
-        from Queue import PriorityQueue
         if not tickets:
             return []
-        edges = defaultdict(PriorityQueue)
-        for [s, e] in tickets:
-            edges[s].put(e)
+        edges = collections.defaultdict(list)
+        for s, e in tickets:
+            heapq.heappush(edges[s], e)
         re = []
-        self.dfs("JFK", re, edges)
+        self.dfs("JFK", edges, re)
         return re[::-1]
     
-    def dfs(self, nd, re, edges):
-        while not edges[nd].empty():
-            top = edges[nd].get()
-            self.dfs(top, re, edges)
-        re.append(nd)
+    def dfs(self, start, edges, re):
+        while edges[start]:
+            nxt = heapq.heappop(edges[start])
+            self.dfs(nxt, edges, re)
+        re.append(start)
+        
+            
+        
+
+
             
         
         

@@ -1,7 +1,59 @@
-###
+ ###
 #Time Complexity: O(n) + O(26)  + O(26log26) = O(n)
 #Space Complexity: O(26) = O(1)
 ###
+class Task(object):
+    def __init__(self, task, cnt):
+        self.task = task
+        self.cnt = cnt
+    def __cmp__(self, other):
+        if self.cnt > other.cnt:
+            return -1
+        elif self.cnt < other.cnt:
+            return 1     
+        else:
+            return 0
+    
+        
+class Solution(object):
+    def leastInterval(self, tasks, n):
+        """
+        :type tasks: List[str]
+        :type n: int
+        :rtype: int
+        """
+        from collections import Counter
+        from Queue import PriorityQueue
+        if not tasks:
+            return 0
+        if not n:
+            return len(tasks)
+        d = Counter(tasks)
+        q = PriorityQueue()
+        for k, v in d.iteritems():
+            q.put(Task(k, v))
+        it = 0
+        
+        while not q.empty():
+            tmp = []
+            for i in xrange(n+1):
+                if q.empty():
+                    if tmp:
+                        it += n + 1 - i
+                    break
+                cur = q.get()
+                cur.cnt -= 1
+                if cur.cnt > 0:
+                    tmp.append(cur)
+                it += 1
+            if tmp:
+                for t in tmp:
+                    q.put(t)
+        return it
+                
+            
+                
+            
 class Task(object):
     def __init__(self, task, cnt):
         self.task = task

@@ -15,6 +15,36 @@ class Solution(object):
         :type intervals: List[Interval]
         :rtype: int
         """
+        import heapq
+        if not intervals:
+            return 0
+        pq = []
+        for it in intervals:
+            heapq.heappush(pq, (it.start, 's'))
+            heapq.heappush(pq, (it.end, 'e'))
+        
+        cnt = 0
+        maxcnt = 0
+        while pq:
+            time, flag = heapq.heappop(pq)
+            if flag == 's':
+                cnt += 1
+            else:
+                cnt -= 1
+            maxcnt = max(maxcnt, cnt)
+        return maxcnt
+# Definition for an interval.
+# class Interval(object):
+#     def __init__(self, s=0, e=0):
+#         self.start = s
+#         self.end = e
+
+class Solution(object):
+    def minMeetingRooms(self, intervals):
+        """
+        :type intervals: List[Interval]
+        :rtype: int
+        """
         from Queue import PriorityQueue
         if not intervals:
             return 0

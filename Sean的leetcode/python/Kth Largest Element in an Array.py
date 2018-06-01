@@ -9,6 +9,33 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
+        return self.findKthSmallest(nums, len(nums)-k+1)
+    def findKthSmallest(self, nums, k):
+        if not nums:
+            return None
+        pos = self.partition(nums, 0, len(nums)-1)
+        if k < pos+1:
+            return self.findKthSmallest(nums[:pos], k)
+        elif k > pos+1:
+            return self.findKthSmallest(nums[pos+1:], k-pos-1)
+        else:
+            return nums[pos]
+        
+    def partition(self, nums, l, r):
+        for i in xrange(l, r):
+            if nums[i] < nums[r]:
+                nums[l], nums[i] = nums[i], nums[l]
+                l += 1
+        nums[l], nums[r] = nums[r], nums[l]
+        return l
+        
+class Solution(object):
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
         pivot = random.choice(nums)
         nums1, nums2 = [], []
         for num in nums:

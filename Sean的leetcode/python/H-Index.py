@@ -10,16 +10,15 @@ class Solution(object):
         """
         if not citations:
             return 0
-        ln = len(citations)
-        d = [0] * (ln + 1)
+        n = len(citations)
+        s = [0] * (n+1)
         for c in citations:
-            if c >= ln:
-                d[ln] += 1
+            if c >= n:
+                s[n] += 1
             else:
-                d[c] += 1
+                s[c] += 1
         accu = 0
-        for i in xrange(ln, -1, -1):
-            accu += d[i]
+        for i in xrange(n, -1, -1):
+            accu += s[i]
             if accu >= i:
                 return i
-        return 0

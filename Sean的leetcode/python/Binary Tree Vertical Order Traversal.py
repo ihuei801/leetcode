@@ -3,8 +3,35 @@
 # Time Complexity: O(nlogn) (sorted dict)
 # Space Complexity: O(n)
 ###
+###
+# Solution 1    
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def verticalOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        if not root:
+            return []
+        q = collections.deque([(root, 0)])
+        d = collections.defaultdict(list)
+        while q:
+            node, idx = q.popleft()
+            d[idx].append(node.val)
+            if node.left:
+                q.append((node.left, idx-1))
+            if node.right:
+                q.append((node.right, idx+1))
+        return [d[k] for k in sorted(d)]
 ### 
-# Solution 1
+# Solution 2
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
@@ -33,31 +60,5 @@ class Solution(object):
                     next_q.append((idx+1, e.right))
             q = next_q
         return [d[i] for i in sorted(d)]
-###
-# Solution 2       
-# Definition for a binary tree node.
-# class TreeNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
 
-class Solution(object):
-    def verticalOrder(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[List[int]]
-        """
-        if not root:
-            return []
-        d = collections.defaultdict(list)
-        q = collections.deque([(0,root)])
-        while q:
-            idx, nd = q.popleft()
-            d[idx].append(nd.val)
-            if nd.left:
-                q.append((idx-1, nd.left))
-            if nd.right:
-                q.append((idx+1, nd.right))
-        return [d[i] for i in sorted(d)]
             

@@ -10,6 +10,41 @@ class Solution(object):
         :type edges: List[List[int]]
         :rtype: List[int]
         """
+        if n <= 2:
+            return range(n)
+        d = collections.defaultdict(set)
+        for e1, e2 in edges:
+            d[e1].add(e2)
+            d[e2].add(e1)
+        
+        q = collections.deque([k for k, v in d.iteritems() if len(v) == 1])
+        num = n
+        while num > 2:
+            size = len(q)
+            num -= size
+            for _ in xrange(size):
+                top = q.popleft()
+                for nxt in d[top]:
+                    if top in d[nxt]:
+                        d[nxt].remove(top)
+                        if len(d[nxt]) == 1:
+                            q.append(nxt)
+        return list(q)
+
+
+
+
+
+
+
+        
+class Solution(object):
+    def findMinHeightTrees(self, n, edges):
+        """
+        :type n: int
+        :type edges: List[List[int]]
+        :rtype: List[int]
+        """
         if not n:
             return []
         if n == 1:

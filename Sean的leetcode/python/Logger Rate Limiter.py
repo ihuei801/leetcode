@@ -9,7 +9,6 @@ class Logger(object):
         Initialize your data structure here.
         """
         self.d = dict()
-        
 
     def shouldPrintMessage(self, timestamp, message):
         """
@@ -20,15 +19,13 @@ class Logger(object):
         :type message: str
         :rtype: bool
         """
-        if timestamp < self.d.get(message, 0):
-            return False
-        self.d[message] = timestamp + 10
-        return True
-        
+        if timestamp >= self.d.get(message, 0):
+            self.d[message] = timestamp + 10
+            return True
+        return False
 
 
 # Your Logger object will be instantiated and called as such:
 # obj = Logger()
 # param_1 = obj.shouldPrintMessage(timestamp,message)
-        
         

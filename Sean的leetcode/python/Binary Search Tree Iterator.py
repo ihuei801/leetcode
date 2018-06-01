@@ -15,36 +15,28 @@ class BSTIterator(object):
         """
         :type root: TreeNode
         """
-        self.stack = []
+        self.stk = []
         cur = root
         while cur:
-            self.stack.append(cur)
+            self.stk.append(cur)
             cur = cur.left
-    
-        
 
     def hasNext(self):
         """
         :rtype: bool
         """
-        
-        return self.stack
-            
+        return bool(self.stk)
 
     def next(self):
         """
         :rtype: int
         """
-        tmp = self.stack.pop()
-        cur = tmp.right
+        top = self.stk.pop()
+        cur = top.right
         while cur:
-            self.stack.append(cur)
+            self.stk.append(cur)
             cur = cur.left
-        return tmp.val
-
-# Your BSTIterator will be called like this:
-# i, v = BSTIterator(root), []
-# while i.hasNext(): v.append(i.next())
+        return top.val
 
 # Your BSTIterator will be called like this:
 # i, v = BSTIterator(root), []

@@ -21,11 +21,13 @@ class Solution(object):
             return 0
         if n == 0:
             return 1
+        if n == 1:
+            return 10
+        cnt = 10
         k = 9
-        unique = 9
-        num = 10
-        for i in xrange(2, n+1):
-            unique *= k
+        uni = 9
+        for i in xrange(2, n+1): 
+            uni *= k
             k -= 1
-            num += unique
-        return num
+            cnt += uni
+        return cnt

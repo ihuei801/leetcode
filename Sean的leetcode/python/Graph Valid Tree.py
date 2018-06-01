@@ -5,6 +5,40 @@
 # Time Complexity: O(E)
 # Space Complexity: O(V)
 ###
+class DSU(object):
+    def __init__(self, num):
+        self.root = range(num)
+        
+    def find(self, e):
+        if self.root[e] != e:
+            self.root[e] = self.find(self.root[e])
+        return self.root[e]
+    
+    def union(self, e1, e2):
+        r1 = self.find(e1)
+        r2 = self.find(e2)
+        if r1 != r2:
+            self.root[r1] = r2
+            return True
+        return False
+        
+class Solution(object):
+    def validTree(self, n, edges):
+        """
+        :type n: int
+        :type edges: List[List[int]]
+        :rtype: bool
+        """
+        if len(edges) != n-1:
+            return False
+        dsu = DSU(n)
+        for v1, v2 in edges:
+            if not dsu.union(v1, v2):
+                return False
+        return True
+    
+            
+
 class Solution(object):
     def validTree(self, n, edges):
         """
@@ -31,7 +65,7 @@ class Solution(object):
     def find(self, v, root):
         if v == root[v]:
             return v
-        root[v] = self.find(root[v], root)
+        root[v] = self.find(root[v], root) #compressed find
         return root[v]
             
         

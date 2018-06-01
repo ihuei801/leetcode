@@ -16,7 +16,7 @@ class Solution(object):
     def __init__(self):
         self.buf4 = [""] * 4
         self.buf_cnt = 0
-        self.buf_idx = 0
+        self.buf_idx = -1
         
     def read(self, buf, n):
         """
@@ -26,14 +26,15 @@ class Solution(object):
         """
         idx = 0
         while idx < n:
-            if self.buf_idx == 0:
+            if self.buf_idx == -1:
                 self.buf_cnt = read4(self.buf4)
+                self.buf_idx = 0
             while idx < n and self.buf_idx < self.buf_cnt:
                 buf[idx] = self.buf4[self.buf_idx]
                 idx += 1
                 self.buf_idx += 1
             if self.buf_idx == self.buf_cnt:
-                self.buf_idx = 0
+                self.buf_idx = -1
             if self.buf_cnt < 4:
                 break
         return idx

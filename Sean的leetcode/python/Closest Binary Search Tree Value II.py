@@ -1,6 +1,6 @@
 
 ###
-# DP
+# Tree Inorder
 # Time Complexit: O(h+k)
 # Space Complexity: O(h)
 ###

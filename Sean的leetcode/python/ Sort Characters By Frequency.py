@@ -1,6 +1,6 @@
 ###
 # Hash Table 
-# Time Complexity: O(n) - bucket sort O(nlogn) - sort
+# Time Complexity: O(n) - bucket sort; O(nlogn) - sort
 # Space Complexity: O(n)
 ###
 # Method 1 - Bucket Sort
@@ -10,16 +10,14 @@ class Solution(object):
         :type s: str
         :rtype: str
         """
-        from collections import Counter, defaultdict
         if not s:
             return ""
-        d = Counter(s)
-        b = defaultdict(list)
-        re = ""
-        for k, v in d.iteritems():
-            b[v].append(k*v)
-            
-        return "".join(["".join(b[k]) for k in xrange(len(s), -1, -1) if k in b])
+        cnt = collections.Counter(s)
+        n = len(s)
+        bucket = collections.defaultdict(list)
+        for k, v in cnt.iteritems():
+            bucket[v].append(k*v)  
+        return "".join("".join(bucket[i]) for i in xrange(n, -1, -1) if i in bucket)
                                         
 # Method 2 - Sort
 class Solution(object):

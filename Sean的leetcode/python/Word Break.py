@@ -16,11 +16,12 @@ class Solution(object):
         """
         if not s or not wordDict:
             return False
-        dp = [False] * (len(s) + 1)
+        n = len(s)
+        dp = [False] * (n+1)
         dp[0] = True
-        for l in xrange(1, len(s) + 1):
-            for i in xrange(l):
-                if dp[i] and s[i:l] in wordDict:
-                    dp[l] = True
+        for i in xrange(1, n+1):
+            for j in xrange(i):
+                if dp[j] and s[j:i] in wordDict:
+                    dp[i] = True
                     break
-        return dp[len(s)]
+        return dp[n]

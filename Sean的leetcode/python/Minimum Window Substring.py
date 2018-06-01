@@ -4,7 +4,6 @@
 # Space Complexity: O(n)
 #
 #######################################################################
-
 class Solution(object):
     def minWindow(self, s, t):
         """
@@ -13,22 +12,24 @@ class Solution(object):
         :rtype: str
         """
         d = collections.Counter(t)
-        missing = len(t)
-        l = r = L = 0
-        min_len = float('inf')
-        while r < len(s):
+        need = len(t)
+        n = len(s) 
+        l, r = 0, 0
+        minlen = float('inf')
+        minst = -1
+        while r < n:
             d[s[r]] -= 1
             if d[s[r]] >= 0:
-                missing -= 1
-            while not missing:
-                if r - l + 1 < min_len:
-                    min_len = r - l + 1
-                    L = l
+                need -= 1
+            while need == 0:
+                if r - l + 1 < minlen:
+                    minlen = r - l + 1
+                    minst = l
                 d[s[l]] += 1
                 if d[s[l]] > 0:
-                    missing += 1
+                    need += 1
                 l += 1
             r += 1
-        return "" if min_len == float('inf') else s[L:L+min_len]
+        return s[minst:minst+minlen] if minlen != float('inf') else ""
                     
                     

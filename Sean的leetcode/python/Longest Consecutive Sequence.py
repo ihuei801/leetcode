@@ -11,11 +11,11 @@ class Solution(object):
         if not nums:
             return 0
         nums = set(nums)
-        max_len = 0
+        maxlen = 0       
         for n in nums:
             if n-1 not in nums:
-                nxt = n + 1
+                nxt = n+1
                 while nxt in nums:
                     nxt += 1
-                max_len = max(max_len, nxt-n)
-        return max_len
+                maxlen = max(maxlen, nxt - n)
+        return maxlen
