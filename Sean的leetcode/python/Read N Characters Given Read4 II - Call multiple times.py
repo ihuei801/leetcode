@@ -14,27 +14,26 @@
 
 class Solution(object):
     def __init__(self):
-        self.buf4 = [""] * 4
-        self.buf_cnt = 0
-        self.buf_idx = -1
+        self.buf4 = [None] * 4
+        self.buf_idx = 0
+        self.buf_num = 0
         
     def read(self, buf, n):
         """
         :type buf: Destination buffer (List[str])
         :type n: Maximum number of characters to read (int)
         :rtype: The number of characters read (int)
-        """
+        """   
         idx = 0
         while idx < n:
-            if self.buf_idx == -1:
-                self.buf_cnt = read4(self.buf4)
+            EOF = False
+            if self.buf_idx == self.buf_num:
+                self.buf_num = read4(self.buf4)
                 self.buf_idx = 0
-            while idx < n and self.buf_idx < self.buf_cnt:
+            while self.buf_idx < self.buf_num and idx < n:
                 buf[idx] = self.buf4[self.buf_idx]
-                idx += 1
                 self.buf_idx += 1
-            if self.buf_idx == self.buf_cnt:
-                self.buf_idx = -1
-            if self.buf_cnt < 4:
-                break
+                idx += 1
+            if self.buf_num < 4:
+                return idx
         return idx

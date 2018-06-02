@@ -12,11 +12,11 @@ class Solution(object):
         if not s:
             return True
         d = {'(': ')', '{': '}', '[': ']'}
-        st = []
+        stk = []
         for c in s:
             if c == '(' or c == '{' or c == '[':
-                st.append(c)
+                stk.append(c)
             else:
-                if not st or d[st.pop()] != c:
+                if not stk or d[stk.pop()] != c:
                     return False
-        return not st 
+        return not bool(stk) 

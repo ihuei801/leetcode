@@ -10,7 +10,6 @@ class HitCounter(object):
         """
         Initialize your data structure here.
         """
-        from collections import deque
         self.q = [(0, 0)] * 300
 
     def hit(self, timestamp):

@@ -18,15 +18,17 @@ class Solution(object):
         :rtype: The number of characters read (int)
         """
         idx = 0
+        buf4 = [None] * 4
         while idx < n:
-            buf4 = [""] * 4
-            buf_cnt = read4(buf4)
+            buf_num = read4(buf4)
             buf_idx = 0
-            while idx < n and buf_idx < buf_cnt:
+            while buf_idx < buf_num and idx < n:
                 buf[idx] = buf4[buf_idx]
-                idx += 1
                 buf_idx += 1
-            if buf_cnt < 4:
-                break
+                idx += 1
+            if buf_num < 4:
+                return idx
         return idx
+
+
             
