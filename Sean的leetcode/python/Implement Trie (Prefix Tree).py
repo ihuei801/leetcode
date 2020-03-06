@@ -42,7 +42,7 @@ class Trie(object):
         :rtype: bool
         """
         node = self.find(word) 
-        return node != None and node.is_word
+        return node and node.is_word
         
 
     def startsWith(self, prefix):
@@ -52,7 +52,7 @@ class Trie(object):
         :rtype: bool
         """
         node = self.find(prefix)
-        return node != None
+        return node is not None
 
 
 # Your Trie object will be instantiated and called as such:
