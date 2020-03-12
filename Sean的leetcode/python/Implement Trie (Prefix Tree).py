@@ -1,7 +1,7 @@
 ###
 # Trie
-# Time Complexity: insert - O(m) search - O(m) startswith - O(m) m: len of key
-# Space Complexity: insert - O(m) search - O(1) startswith - O(1)
+# Time Complexity: insert - O(l) search - O(l) startswith - O(l) l: len of key
+# Space Complexity: insert - O(l) search - O(1) startswith - O(1)
 ###
 class TrieNode(object):
     def __init__(self):

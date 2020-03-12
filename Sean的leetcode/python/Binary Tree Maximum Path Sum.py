@@ -9,28 +9,22 @@
 #         self.val = x
 #         self.left = None
 #         self.right = None
-
 class Solution(object):
     def maxPathSum(self, root):
         """
         :type root: TreeNode
         :rtype: int
         """
-        self.maxsum = -float('inf')
+        self.max_sum = -float('inf')
         self.dfs(root)
-        return self.maxsum
+        return self.max_sum
+
     def dfs(self, root):
         if not root:
             return 0
-        left_sum = self.dfs(root.left)
-        right_sum = self.dfs(root.right)
-        l_sum, r_sum = root.val, root.val
-        if left_sum > 0:
-            l_sum += left_sum
-        if right_sum > 0:
-            r_sum += right_sum
-        self.maxsum = max(self.maxsum, l_sum + r_sum - root.val)
-        return max(l_sum, r_sum) 
-                                        
+        lsum = max(self.dfs(root.left), 0)
+        rsum = max(self.dfs(root.right), 0)
+        self.max_sum = max(self.max_sum, root.val + lsum + rsum)
+        return max(lsum, rsum) + root.val
                             
                     

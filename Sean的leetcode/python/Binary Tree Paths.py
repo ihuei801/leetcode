@@ -18,8 +18,6 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[str]
         """
-        if not root:
-            return []
         re = []
         self.dfs(root, "", re)
         return re

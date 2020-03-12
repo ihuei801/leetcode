@@ -10,39 +10,36 @@ class Solution(object):
         :type words: List[str]
         :rtype: List[str]
         """
-        dct = self.build_dct(words)
-        return self.search_word(board, dct)
+        dct = Trie(words)
+        return self.search(board, dct)
 
-    def build_dct(self, words):
-        dct = Trie()
-        for word in words:
-            dct.insert(word)
-        return dct
-
-    def search_word(self, board, dct):
-        results = set()
+    def search(self, board, dct):
+        result = set()
         for i, row in enumerate(board):
             for j, c in enumerate(row):
-                self.dfs(board, i, j, dct.root, "", results)
-        return list(results)
+                self.dfs(board, i, j, dct.root, "", result)
+        return list(result)
 
-    def dfs(self, board, i, j, cur, prefix, results):
+    def dfs(self, board, i, j, cur, prefix, result):
         if i < 0 or j < 0 or i >= len(board) or j >= len(board[0]):
             return
         c = board[i][j]
         if c is '#' or c not in cur.children:
             return
+        cur = cur.children[c]
+        if cur.is_end:
+            result.add(prefix + c)
         board[i][j] = '#'
-        if cur.children[c].is_end:
-            results.add(prefix + c)
         for nbi, nbj in ((i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)):
-            self.dfs(board, nbi, nbj, cur.children[c], prefix + c, results)
+            self.dfs(board, nbi, nbj, cur, prefix + c, result)
         board[i][j] = c
 
 
 class Trie(object):
-    def __init__(self):
+    def __init__(self, words):
         self.root = TrieNode()
+        for word in words:
+            self.insert(word)
 
     def insert(self, word):
         cur = self.root
