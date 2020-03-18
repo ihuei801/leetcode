@@ -25,7 +25,7 @@ class BSTIterator(object):
         """
         :rtype: bool
         """
-        return bool(self.stk)
+        return len(self.stk) != 0
 
     def next(self):
         """

@@ -21,22 +21,20 @@ class Solution(object):
         self.maxlen = 0
         self.dfs(root)
         return self.maxlen
-    
-    def dfs(self, root):
-        if not root:
+
+    def dfs(self, cur):
+        if not cur:
             return 0
-        left_incr = self.dfs(root.left)
-        right_incr = self.dfs(root.right)
-        l_incr = r_incr = 1
-        if root.left and root.val + 1 == root.left.val:
-            l_incr = left_incr + 1
-        if root.right and root.val + 1 == root.right.val:
-            r_incr = right_incr + 1
-        self.maxlen = max(self.maxlen, max(l_incr, r_incr))
-        return max(l_incr, r_incr)
-        
-        
-               
+        lh = self.dfs(cur.left)
+        rh = self.dfs(cur.right)
+        l_ext = r_ext = 1  # count node, init to 1
+        if cur.left and cur.left.val == cur.val + 1:
+            l_ext = lh + 1
+        if cur.right and cur.right.val == cur.val + 1:
+            r_ext = rh + 1
+        self.maxlen = max(self.maxlen, max(l_ext, r_ext))
+        return max(l_ext, r_ext)
+
 # pre-order
 # Definition for a binary tree node.
 # class TreeNode(object):

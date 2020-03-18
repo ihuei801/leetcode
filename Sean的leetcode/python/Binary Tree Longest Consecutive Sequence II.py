@@ -21,25 +21,26 @@ class Solution(object):
         self.maxlen = 0
         self.dfs(root)
         return self.maxlen
-    
-    def dfs(self, root):
-        if not root:
-            return (0, 0)
-        left_incr, left_decr = self.dfs(root.left)
-        right_incr, right_decr = self.dfs(root.right)
-        l_incr = l_decr = r_incr = r_decr = 1
-        if root.left:
-            if root.val + 1 == root.left.val:
-                l_incr = left_incr + 1
-            elif root.val - 1 == root.left.val:
-                l_decr = left_decr + 1
-        if root.right:
-            if root.val + 1 == root.right.val:
-                r_incr = right_incr + 1
-            elif root.val - 1 == root.right.val:
-                r_decr = right_decr + 1
-        self.maxlen = max(self.maxlen, l_incr + r_decr - 1, l_decr + r_incr - 1)
-        return max(l_incr, r_incr), max(l_decr, r_decr)
+
+    def dfs(self, cur):
+        if not cur:
+            return 0, 0
+        l_incr, l_decr = self.dfs(cur.left)
+        r_incr, r_decr = self.dfs(cur.right)
+        l_incr_ext = l_decr_ext = 1
+        r_incr_ext = r_decr_ext = 1
+        if cur.left:
+            if cur.left.val == cur.val + 1:
+                l_incr_ext = l_incr + 1
+            if cur.left.val == cur.val - 1:
+                l_decr_ext = l_decr + 1
+        if cur.right:
+            if cur.right.val == cur.val + 1:
+                r_incr_ext = r_incr + 1
+            if cur.right.val == cur.val - 1:
+                r_decr_ext = r_decr + 1
+        self.maxlen = max(self.maxlen, max(l_incr_ext + r_decr_ext - 1, r_incr_ext + l_decr_ext - 1))
+        return max(l_incr_ext, r_incr_ext), max(l_decr_ext, r_decr_ext)
 
         
                                         

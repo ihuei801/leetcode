@@ -16,21 +16,16 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        if not root:
-            return 0
         self.pre = None #need to be global because you can't pass a prev to parent
         self.re = float('inf')
         self.dfs(root)
         return self.re
-    
-    def dfs(self, node):
-        if not node:
-            return
-        self.dfs(node.left)
-        if self.pre:
-            self.re = min(self.re, root.val - self.pre.val)
-        self.pre = node
-        self.dfs(node.right)
 
-        
-        
+    def dfs(self, cur):
+        if not cur:
+            return
+        self.dfs(cur.left)
+        if self.pre:
+            self.mindist = min(self.mindist, cur.val - self.pre.val)
+        self.pre = cur
+        self.dfs(cur.right)

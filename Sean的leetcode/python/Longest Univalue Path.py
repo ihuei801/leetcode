@@ -16,24 +16,21 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        if not root:
+        self.maxlen = 0
+        self.dfs(root, None)
+        return self.maxlen
+
+    def dfs(self, cur, parent):
+        if not cur:
             return 0
-        self.max_len = 0
-        self.dfs(root)
-        return self.max_len 
-    
-    def dfs(self, root):
-        if not root:
-            return 0
-        left = self.dfs(root.left)
-        right = self.dfs(root.right)
-        left_ext = 0
-        right_ext = 0
-        if root.left and root.left.val == root.val:
-            left_ext = left + 1
-        if root.right and root.right.val == root.val:
-            right_ext = right + 1
-        self.max_len = max(self.max_len, left_ext + right_ext)
-        return max(left_ext, right_ext)
+        lh = self.dfs(cur.left, cur)
+        rh = self.dfs(cur.right, cur)
+        l_ext = r_ext = 0
+        if cur.left and cur.left.val == cur.val:
+            l_ext = lh + 1
+        if cur.right and cur.right.val == cur.val:
+            r_ext = rh + 1
+        self.maxlen = max(self.maxlen, l_ext + r_ext)
+        return max(l_ext, r_ext)
         
         

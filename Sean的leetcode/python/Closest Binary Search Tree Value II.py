@@ -19,25 +19,29 @@ class Solution(object):
         :type k: int
         :rtype: List[int]
         """
-        if not root or not k:
+        if not root:
             return []
-        pred, succ = [], []
-        self.init_pred(root, target, pred)
-        self.init_succ(root, target, succ)
-        re = []
+
+        pred = self.init_pred(root, target)
+        succ = self.init_succ(root, target)
+        result = []
+        print(pred)
+        print(succ)
         while k:
             if not pred:
-                re.append(self.get_next_succ(succ))
+                result.append(self.get_next_succ(succ))
             elif not succ:
-                re.append(self.get_next_pred(pred))
+                result.append(self.get_next_pred(pred))
             else:
                 if abs(pred[-1].val - target) < abs(succ[-1].val - target):
-                    re.append(self.get_next_pred(pred))
+                    result.append(self.get_next_pred(pred))
                 else:
-                    re.append(self.get_next_succ(succ))
+                    result.append(self.get_next_succ(succ))
             k -= 1
-        return re
-    def init_pred(self, root, target, pred):
+        return result
+
+    def init_pred(self, root, target):
+        pred = []
         cur = root
         while cur:
             if cur.val <= target:
@@ -45,7 +49,10 @@ class Solution(object):
                 cur = cur.right
             else:
                 cur = cur.left
-    def init_succ(self, root, target, succ):
+        return pred
+
+    def init_succ(self, root, target):
+        succ = []
         cur = root
         while cur:
             if cur.val > target:
@@ -53,17 +60,22 @@ class Solution(object):
                 cur = cur.left
             else:
                 cur = cur.right
+        return succ
+
     def get_next_pred(self, pred):
-        tmp = pred.pop()
-        cur = tmp.left
+        top = pred.pop()
+        cur = top.left
         while cur:
             pred.append(cur)
             cur = cur.right
-        return tmp.val
+        return top.val
+
     def get_next_succ(self, succ):
-        tmp = succ.pop()
-        cur = tmp.right
+        top = succ.pop()
+        cur = top.right
         while cur:
             succ.append(cur)
             cur = cur.left
-        return tmp.val
+        return top.val
+
+

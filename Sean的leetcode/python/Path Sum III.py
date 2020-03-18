@@ -1,6 +1,7 @@
 ###
 # Memoize to reduce time complexity
 # Think about accu = cur_sum - pre_sum
+# use a global count to store the number of path that sums to S
 # Time Complexity: O(N)
 # Space Complexity: O(N)
 ###
@@ -18,21 +19,25 @@ class Solution(object):
         :type sum: int
         :rtype: int
         """
-        return self.dfs(root, S, 0, {0: 1})
+        self.cnt = 0
+        self.dfs(root, S, 0, {0: 1})
+        return self.cnt
 
     def dfs(self, cur, S, cur_sum, pre_sum):
         if not cur:
-            return 0
+            return
         cur_sum += cur.val
         if not cur.left and not cur.right:
-            return pre_sum.get(cur_sum - S, 0)
-        cnt = pre_sum.get(cur_sum - S, 0)
+            self.cnt += pre_sum.get(cur_sum - S, 0)
+            return
+        self.cnt += pre_sum.get(cur_sum - S, 0)
         pre_sum[cur_sum] = pre_sum.get(cur_sum, 0) + 1
-        cnt += self.dfs(cur.left, S, cur_sum, pre_sum) + self.dfs(cur.right, S, cur_sum, pre_sum)
+        self.dfs(cur.left, S, cur_sum, pre_sum)
+        self.dfs(cur.right, S, cur_sum, pre_sum)
         pre_sum[cur_sum] = pre_sum.get(cur_sum) - 1
-        return cnt
+        return
 
-###
+    ###
 # Brute force
 # Time Complexity: T(N) = N + 2T(N/2) -> O(NlogN)
 # Space Complexity: O(N)

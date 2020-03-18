@@ -1,7 +1,7 @@
 ###
 # Tree
 # Time Complexity: O(n)
-# Space Complexity: O(1) ignore recursive
+# Space Complexity: O(n)
 ###
 # Definition for a binary tree node.
 # class TreeNode(object):
@@ -16,32 +16,32 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
-        if not root:
-            return []
-        self.pre = None
-        self.maxcnt = 0
+        self.result = []
         self.curcnt = 0
-        self.re = []
+        self.maxcnt = 0
+        self.pre = None
         self.dfs(root)
-        return self.re
-    
-    def dfs(self, root):
-        if not root:
+        return self.result
+
+    def dfs(self, cur):
+        if not cur:
             return
-        self.dfs(root.left)
-        if self.pre and self.pre.val == root.val:
+
+        self.dfs(cur.left)
+        if self.pre and cur.val == self.pre.val:
             self.curcnt += 1
         else:
             self.curcnt = 1
         if self.curcnt == self.maxcnt:
-            self.re.append(root.val)
+            self.result.append(cur.val)
         elif self.curcnt > self.maxcnt:
-            self.re = [root.val]           #assign a list in a function, need to do re[:] = [root.val]
-            self.maxcnt = self.curcnt 
-        self.pre = root
-        self.dfs(root.right)
-    
-
+            self.result = [cur.val]  #assign a list in a function, need to do re[:] = [root.val]
+            self.maxcnt = self.curcnt
+        self.pre = cur
+        self.dfs(cur.right)
+#####
+# Time Complexity: O(n)
+# Space Complexity: O(1)
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):

@@ -34,5 +34,6 @@ class Solution(object):
             if cur.val == s:
                 result.append(one_sol + [cur.val])
             return
+
         self.dfs(cur.left, s - cur.val, one_sol + [cur.val], result)
         self.dfs(cur.right, s - cur.val, one_sol + [cur.val], result)

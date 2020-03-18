@@ -9,6 +9,7 @@ class Node(object):
         self.end = end
         self.left = None
         self.right = None
+
     def insert(self, node):
         if node.start >= self.end:
             if not self.right:
