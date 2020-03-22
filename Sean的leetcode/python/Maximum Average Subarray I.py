@@ -10,15 +10,17 @@ class Solution(object):
         :type k: int
         :rtype: float
         """
-        summ = 0  
-        res = -float('inf')
-        for i in xrange(len(nums)):
+        if k == 0:
+            return -1
+        cursum = 0
+        maxsum = -float('inf')
+        for i, e in enumerate(nums):
             if i >= k:
-                summ -= nums[i-k]
-            summ += nums[i]
+                cursum -= nums[i-k]
+            cursum += e
             if i >= k-1:
-                res = max(res,summ)  
-        return float(res)/k;
+                maxsum = max(maxsum, cursum)
+        return float(maxsum) / k
             
                 
                                         

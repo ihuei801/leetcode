@@ -1,27 +1,11 @@
 ###
+# DSU: Disjoint set union
 # Has n-1 edges and is acyclic.
 # Has n-1 edges and is connected.
 # Compressed_find => find: O(1)
 # Time Complexity: O(E)
 # Space Complexity: O(V)
 ###
-class DSU(object):
-    def __init__(self, num):
-        self.root = range(num)
-        
-    def find(self, e):
-        if self.root[e] != e:
-            self.root[e] = self.find(self.root[e])
-        return self.root[e]
-    
-    def union(self, e1, e2):
-        r1 = self.find(e1)
-        r2 = self.find(e2)
-        if r1 != r2:
-            self.root[r1] = r2
-            return True
-        return False
-        
 class Solution(object):
     def validTree(self, n, edges):
         """
@@ -29,15 +13,32 @@ class Solution(object):
         :type edges: List[List[int]]
         :rtype: bool
         """
-        if len(edges) != n-1:
+        if len(edges) != n - 1:
             return False
         dsu = DSU(n)
         for v1, v2 in edges:
             if not dsu.union(v1, v2):
                 return False
         return True
-    
-            
+
+
+class DSU(object):
+    def __init__(self, n):
+        self.roots = range(n)
+
+    def find(self, v):
+        if self.roots[v] != v:
+            self.roots[v] = self.find(self.roots[v])  # compressed find
+        return self.roots[v]
+
+    def union(self, v1, v2):
+        r1 = self.find(v1)
+        r2 = self.find(v2)
+        if r1 != r2:
+            self.roots[r2] = r1
+            return True
+        return False
+
 
 class Solution(object):
     def validTree(self, n, edges):
@@ -46,29 +47,36 @@ class Solution(object):
         :type edges: List[List[int]]
         :rtype: bool
         """
-        if len(edges) != n-1:
+        # Condition 1: The graph must contain n - 1 edges
+        if len(edges) != n - 1:
             return False
-        root = range(n)
+        # Condition 2: The graph must contain a single connected component
+        dsu = DSU(n)
         for v1, v2 in edges:
-            if not self.union(v1, v2, root):
+            if not dsu.union(v1, v2):
                 return False
         return True
-    
-    def union(self, v1, v2, root):
-        r1 = self.find(v1, root)
-        r2 = self.find(v2, root)
+
+
+class DSU(object):
+    def __init__(self, n):
+        self.roots = range(n)
+
+    def find(self, v):
+        while self.roots[v] != v:
+            v = self.roots[v]
+        return v
+
+    def union(self, v1, v2):
+        r1 = self.find(v1)
+        r2 = self.find(v2)
         if r1 != r2:
-            root[r2] = r1
+            self.roots[r2] = r1
             return True
         return False
-    
-    def find(self, v, root):
-        if v == root[v]:
-            return v
-        root[v] = self.find(root[v], root) #compressed find
-        return root[v]
-            
-        
+
+
+
             
         
             

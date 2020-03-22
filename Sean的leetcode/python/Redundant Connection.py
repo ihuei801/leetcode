@@ -1,25 +1,9 @@
 ###
-# Union Find 
+# Union Find
+# Compressed_find => find: O(1)
 # Time Complexity: O(E)
 # Space Complexity: O(V)
 ###
-class DSU(object):
-    def __init__(self, n):
-        self.root = range(n)
-        
-    def find(self, v):
-        if v != self.root[v]:
-            self.root[v] = self.find(self.root[v])
-        return self.root[v]
-    
-    def union(self, v1, v2):
-        r1 = self.find(v1)
-        r2 = self.find(v2)
-        if r1 != r2:
-            self.root[r1] = r2
-            return True
-        return False
-    
 class Solution(object):
     def findRedundantConnection(self, edges):
         """
@@ -28,11 +12,30 @@ class Solution(object):
         """
         if not edges:
             return []
-        n = len(edges)+1
+        n = len(edges) + 1
         dsu = DSU(n)
         for v1, v2 in edges:
             if not dsu.union(v1, v2):
                 return [v1, v2]
+        return []
+
+
+class DSU(object):
+    def __init__(self, n):
+        self.roots = range(n)
+
+    def find(self, v):
+        if self.roots[v] != v:
+            self.roots[v] = self.find(self.roots[v])
+        return self.roots[v]
+
+    def union(self, v1, v2):
+        r1 = self.find(v1)
+        r2 = self.find(v2)
+        if r1 != r2:
+            self.roots[r2] = r1
+            return True
+        return False
         
                      
    

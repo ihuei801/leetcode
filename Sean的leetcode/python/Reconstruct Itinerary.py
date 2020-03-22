@@ -8,7 +8,8 @@
 # https://www.geeksforgeeks.org/euler-circuit-directed-graph/
 # Hierholzer’s Algorithm for directed graph
 # https://www.geeksforgeeks.org/hierholzers-algorithm-directed-graph/
-# Time Complexity: O(ElogE) (create edge) + O(E) (dfs visit each edge once) + O(E) reverse 
+# Time Complexity: O(ElogE) (create edge) + O(E) (dfs visit each edge once) + O(E) reverse
+# Space Complexity: Graph(O(V) + O(E)) + O(E)
 ###
 class Solution(object):
     def findItinerary(self, tickets):
@@ -18,18 +19,22 @@ class Solution(object):
         """
         if not tickets:
             return []
-        edges = collections.defaultdict(list)
+        outs = self.build_outs(tickets)
+        result = []
+        self.dfs("JFK", outs, result)
+        return result[::-1]
+
+    def build_outs(self, tickets):
+        outs = collections.defaultdict(list)
         for s, e in tickets:
-            heapq.heappush(edges[s], e)
-        re = []
-        self.dfs("JFK", edges, re)
-        return re[::-1]
-    
-    def dfs(self, start, edges, re):
-        while edges[start]:
-            nxt = heapq.heappop(edges[start])
-            self.dfs(nxt, edges, re)
-        re.append(start)
+            heapq.heappush(outs[s], e)
+        return outs
+
+    def dfs(self, start, outs, result):
+        while outs[start]:
+            nxt = heapq.heappop(outs[start])
+            self.dfs(nxt, outs, result)
+        result.append(start)
         
             
         

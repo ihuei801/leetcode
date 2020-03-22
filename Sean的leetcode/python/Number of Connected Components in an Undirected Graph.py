@@ -3,35 +3,39 @@
 # Time Complexity: O(E) 
 # Space Complexity: O(V)
 ###
-class DSU(object):
-    def __init__(self, n):
-        self.root = range(n)
-        
-    def find(self, v1):
-        if self.root[v1] != v1:
-            self.root[v1] = self.find(self.root[v1])
-        return self.root[v1]
-    
-    def union(self, v1, v2):
-        r1 = self.find(v1)
-        r2 = self.find(v2)
-        if r1 != r2:
-            self.root[r1] = r2
-            return True
-        return False
-    
 class Solution(object):
     def countComponents(self, n, edges):
         """
         :type n: int
         :type edges: List[List[int]]
         :rtype: int
-        """    
+        """
+        if not edges:
+            return n
         dsu = DSU(n)
+        result = n
         for v1, v2 in edges:
             if dsu.union(v1, v2):
-                n -= 1
-        return n
+                result -= 1
+        return result
+
+
+class DSU(object):
+    def __init__(self, n):
+        self.roots = range(n)
+
+    def find(self, v):
+        if self.roots[v] != v:
+            self.roots[v] = self.find(self.roots[v])
+        return self.roots[v]
+
+    def union(self, v1, v2):
+        r1 = self.find(v1)
+        r2 = self.find(v2)
+        if r1 != r2:
+            self.roots[r2] = r1
+            return True
+        return False
 
 
 

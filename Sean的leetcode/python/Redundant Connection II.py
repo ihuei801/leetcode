@@ -2,7 +2,7 @@
 # Union Find
 # There are two cases for the tree structure to be invalid.
 # 1) A node having two parents and a circle exists e.g. [[1,2],[1,3],[2,3]] => return the last one
-# 2) A circle exists: [[1,2],[2,3],[3,1],[1,4]] => return the edge inside the loop 
+# 2) Only a circle exists: [[1,2],[2,3],[3,1],[1,4]] => return the edge inside the loop
 # Approach:
 # 1) Check whether there is a node having two parents. 
 #     If so, store them as candidates A and B, and set the second edge invalid. 
@@ -17,22 +17,6 @@
 # Time Complexity: O(E)
 # Space Complexity: O(V)
 ###
-class DSU(object):
-    def __init__(self, n):
-        self.root = range(n)
-    
-    def find(self, v):
-        if self.root[v] != v:
-            self.root[v] = self.find(self.root[v])
-        return self.root[v]
-    
-    def union(self, v1, v2):
-        r1 = self.find(v1)
-        r2 = self.find(v2)
-        if r1 != r2:
-            self.root[r1] = r2
-            return True
-        return False
 class Solution(object):
     def findRedundantDirectedConnection(self, edges):
         """
@@ -41,27 +25,49 @@ class Solution(object):
         """
         if not edges:
             return []
-        d = collections.defaultdict(list)
-        cands = []
-        for s, e in edges:
-            if d[e]:
-                cands.append([d[e][0], e])
-                cands.append([s, e])
-            d[e].append(s)
-    
+        ins, cands = self.build_ins_and_cands(edges)
         n = len(edges) + 1
         dsu = DSU(n)
-        for s, e in edges:
-            if cands and [s, e] == cands[1]:
+        result = []
+        for v1, v2 in edges:
+            if cands and cands[1] == [v1, v2]:
                 continue
-            if not dsu.union(s, e):
+            if not dsu.union(v1, v2):
                 if not cands:
-                    return [s, e] #No two parents, only cycle
-                break
-        else:
-            return cands[1] #cands[1] remove->valid
-        return cands[0]
-        
+                    return [v1, v2]
+                return cands[0] # Even cands[1] remove still invalid, should remove cands[0]
+        return cands[1]
+
+    def build_ins_and_cands(self, edges):
+        ins = collections.defaultdict(list)
+        cands = []
+        for v1, v2 in edges:
+            if ins[v2]:
+                cands.append([ins[v2][0], v2])
+                cands.append([v1, v2])
+            ins[v2].append(v1)
+        return ins, cands
+
+
+class DSU(object):
+    def __init__(self, n):
+        self.roots = range(n)
+
+    def find(self, v):
+        if self.roots[v] != v:
+            self.roots[v] = self.find(self.roots[v])
+        return self.roots[v]
+
+    def union(self, v1, v2):
+        r1 = self.find(v1)
+        r2 = self.find(v2)
+        if r1 != r2:
+            self.roots[r2] = r1
+            return True
+        return False
+
+
+
 class Solution(object):
     def findRedundantDirectedConnection(self, edges):
         """
