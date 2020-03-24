@@ -1,5 +1,5 @@
 ###
-# Array sliding window
+# Sliding Window - fixed size
 # Time Complexity: O(n)
 # Space Complexity: O(1)
 ###
@@ -14,12 +14,13 @@ class Solution(object):
             return -1
         cursum = 0
         maxsum = -float('inf')
-        for i, e in enumerate(nums):
-            if i >= k:
-                cursum -= nums[i-k]
+        l = 0
+        for r, e in enumerate(nums):
             cursum += e
-            if i >= k-1:
+            if r >= k-1:
                 maxsum = max(maxsum, cursum)
+                cursum -= nums[l]
+                l += 1
         return float(maxsum) / k
             
                 

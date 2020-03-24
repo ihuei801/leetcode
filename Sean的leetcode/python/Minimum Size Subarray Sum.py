@@ -1,5 +1,5 @@
 ###
-# Two Pointers
+# Moving Window
 # Time Complexity: O(n)
 # Space Complexity: O(1)
 ###
@@ -12,16 +12,16 @@ class Solution(object):
         """
         if not nums:
             return 0
-        curr = 0
-        min_len = float('inf')
-        l = r = 0
-        while r < len(nums):
-            curr += nums[r]
-            while curr >= s:
-                if r - l + 1 < min_len:
-                    min_len = r - l + 1
-                curr -= nums[l]
+        l = 0
+        cursum = 0
+        minlen = float('inf')
+        for r, e in enumerate(nums):
+            cursum += e
+            while cursum >= s:
+                minlen = min(minlen, r - l + 1)
+                cursum -= nums[l]
                 l += 1
-            r += 1
-        return 0 if min_len == float('inf') else min_len
-            
+        return minlen if minlen != float('inf') else 0
+
+
+
