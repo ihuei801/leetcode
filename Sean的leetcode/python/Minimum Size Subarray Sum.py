@@ -1,5 +1,5 @@
 ###
-# Moving Window
+# Sliding Window
 # Time Complexity: O(n)
 # Space Complexity: O(1)
 ###
