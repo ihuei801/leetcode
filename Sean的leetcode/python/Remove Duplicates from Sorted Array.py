@@ -10,12 +10,9 @@ class Solution(object):
         """
         if len(nums) <= 1:
             return len(nums)
-        l = i = 1
-        while i < len(nums):
-            if nums[i] != nums[l-1]:
-                nums[l] = nums[i]
-                l += 1
-            i += 1
-        return l
-        
-        
+        p = 0
+        for i, e in enumerate(nums):
+            if nums[i] > nums[p]:
+                p += 1
+                nums[p] = nums[i]
+        return p + 1
