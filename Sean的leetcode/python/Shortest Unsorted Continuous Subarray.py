@@ -8,25 +8,21 @@
 # Time Complexity: hasNext:  O(n)
 # Space Complexity: O(1)
 ###
-class Solution(object):
-    def findUnsortedSubarray(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        
-        start = -1
-        end = -1
-        minv = float('inf')
-        maxv = -float('inf')
-        for i in xrange(len(nums)):
-            maxv = max(maxv, nums[i])
-            minv = min(minv, nums[len(nums)-1-i])
-            if nums[i] < maxv:
-                end = i
-            if nums[len(nums)-1-i] > minv:
-                start = len(nums)-1-i
-
-        return end - start + 1 if end > start else 0
+class Solution:
+    def findUnsortedSubarray(self, nums: List[int]) -> int:
+        if not nums:
+            return
+        l_max = -float('inf')
+        r_min = float('inf')
+        l = r = -1
+        for i, e in enumerate(nums):
+            j = len(nums)-1-i
+            l_max = max(e, l_max)
+            r_min = min(nums[j], r_min)
+            if e < l_max:
+                r = i
+            if nums[j] > r_min:
+                l = j
+        return r - l + 1 if r > l else 0
                             
                     

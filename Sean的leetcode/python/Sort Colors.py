@@ -23,5 +23,5 @@ class Solution(object):
             else:
                 nums[i], nums[r] = nums[r], nums[i]
                 r -= 1
-        
+                # we cannot increase i here because the number swapped to nums[i] can be 0, 1 or 2
                 
