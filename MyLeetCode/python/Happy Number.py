@@ -1,7 +1,7 @@
 """
 Fast & Slow pointer
 Time Complexity: O(n)
-Space Complexity:O(2)
+Space Complexity:O(1)
 """
 class Solution:
     def isHappy(self, n: int) -> bool:
