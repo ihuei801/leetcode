@@ -1,6 +1,8 @@
-###
-# Time Complexity: O(n)
-# Space Complexity: O(1)
+"""
+Fast & Slow pointer
+Time Complexity: O(n)
+Space Complexity:O(1)
+"""
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, x):
@@ -8,21 +10,26 @@
 #         self.next = None
 
 class Solution:
-    def isPalindrome(self, head: ListNode) -> bool:
+    def reorderList(self, head: ListNode) -> None:
+        """
+        Do not return anything, modify head in-place instead.
+        """
         if not head:
-            return True
-
+            return
         l1_end = self.find_mid(head)
         l2 = self.reverse(l1_end)
-
         p1 = head
         p2 = l2
         while p1 and p2:
-            if p1.val != p2.val:
-                return False
-            p1 = p1.next
-            p2 = p2.next
-        return True
+            tmp = p1.next
+            p1.next = p2
+            p1 = tmp
+            tmp = p2.next
+            p2.next = p1
+            p2 = tmp
+        if p1:
+            p1.next = None
+        return head
 
     def find_mid(self, head):
         s = f = head
@@ -40,3 +47,7 @@ class Solution:
             pre = p
             p = nxt
         return pre
+
+
+                            
+                    
