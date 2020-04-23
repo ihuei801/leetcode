@@ -3,36 +3,30 @@
 # Space Complexity: O(n)
 ###
 # Method 1
+# Stack
 # Definition for an interval.
 # class Interval(object):
 #     def __init__(self, s=0, e=0):
 #         self.start = s
 #         self.end = e
-
-class Solution(object):
-    def insert(self, intervals, newInterval):
-        """
-        :type intervals: List[Interval]
-        :type newInterval: Interval
-        :rtype: List[Interval]
-        """
-        re = []
-        add = False
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        result = []
         i = 0
-        while i < len(intervals) and intervals[i].end < newInterval.start:
-            re.append(intervals[i])
+        while i < len(intervals) and newInterval[0] > intervals[i][1]:
+            result.append(intervals[i])
             i += 1
-        re.append(newInterval)
-        
+        result.append(newInterval)
         while i < len(intervals):
-            print i
-            if intervals[i].start > re[-1].end:
-                re.append(intervals[i])
+            if intervals[i][0] > result[-1][1]:
+                result.append(intervals[i])
             else:
-                re[-1].start = min(re[-1].start, intervals[i].start)
-                re[-1].end = max(re[-1].end, intervals[i].end)
+                result[-1][0] = min(result[-1][0], intervals[i][0])
+                result[-1][1] = max(result[-1][1], intervals[i][1])
             i += 1
-        return re
+        return result
+
+
 # Method 2
 # Use merge
 # Definition for an interval.

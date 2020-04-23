@@ -8,30 +8,33 @@
 #     def __init__(self, s=0, e=0):
 #         self.start = s
 #         self.end = e
-
-class Solution(object):
-    def minMeetingRooms(self, intervals):
-        """
-        :type intervals: List[Interval]
-        :rtype: int
-        """
+class Event:
+    def __init__(self, time, flag):
+        self.time = time
+        self.flag = flag
+    def __lt__(self, other):
+        if self.time != other.time:
+            return self.time < other.time
+        else:
+            return self.flag == 'e'
+class Solution:
+    def minMeetingRooms(self, intervals: List[List[int]]) -> int:
         import heapq
         if not intervals:
             return 0
         pq = []
         for it in intervals:
-            heapq.heappush(pq, (it.start, 's'))
-            heapq.heappush(pq, (it.end, 'e'))
-        
-        cnt = 0
+            heapq.heappush(pq, Event(it[0], 's'))
+            heapq.heappush(pq, Event(it[1], 'e'))
         maxcnt = 0
+        cnt = 0
         while pq:
-            time, flag = heapq.heappop(pq)
-            if flag == 's':
+            event = heapq.heappop(pq)
+            if event.flag == 's':
                 cnt += 1
             else:
                 cnt -= 1
-            maxcnt = max(maxcnt, cnt)
+            maxcnt = max(cnt, maxcnt)
         return maxcnt
 # Definition for an interval.
 # class Interval(object):
