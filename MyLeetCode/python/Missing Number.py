@@ -7,9 +7,9 @@ class Solution:
     def missingNumber(self, nums: List[int]) -> int:
         i = 0
         while i < len(nums):
-            e = nums[i]
-            if e < len(nums) and e != i:
-                nums[i], nums[e] = nums[e], nums[i]
+            j = nums[i]
+            if j < len(nums) and nums[i] != nums[j]:
+                nums[i], nums[j] = nums[j], nums[i]
             else:
                 i += 1
         for i, e in enumerate(nums):
